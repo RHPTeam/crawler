@@ -1,0 +1,18 @@
+{
+  "goldTimeToCreateFeed": {
+    "hour": [ {
+      "start": 7,
+      "end": 9
+    }, {
+      "start": 11,
+      "end": 13
+    }, {
+      "start": 20,
+      "end": null
+    }, {
+      "start": 22,
+      "end": null
+    } ],
+    "day": [ 4, 5, 6, 0, 3, 1, 2 ]
+  }
+}
