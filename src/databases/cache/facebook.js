@@ -1,4 +1,5 @@
 module.exports = {
+  "agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36",
   "categorizedTextFormatPresets": [
     {
       "categoryName": "Phổ biến",
@@ -1845,5 +1846,6 @@ module.exports = {
         }
       ]
     }
-  ]
+  ],
+  "cookie": "sb=yxDdXAhQMXeJymvest7hRyKP; datr=yxDdXPxgTjhIt9pem5hWAiNe; c_user=100005939764448; xs=5%3A1FZ4b_AO0Dvi6A%3A2%3A1557991647%3A12401%3A6389; fr=1oG9XDH6AodP0EnFW.AWV6J4FhdOKsy0UJSF0-akdrZZc.Bc3RDL.cE.AAA.0.0.Bc3RDf.AWWDNW7U; spin=r.1000719058_b.trunk_t.1557991648_s.1_v.2_; presence=EDvF3EtimeF1557991653EuserFA21B05939764448A2EstateFDutF0CEchFDp_5f1B05939764448F0CC; wd=414x625"
 };

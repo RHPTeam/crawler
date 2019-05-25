@@ -1,4 +1,4 @@
-const axios = require( "axios/index" );
+const axios = require( "axios" );
 
 module.exports = {
   "update": ( url, headers, data ) => {
