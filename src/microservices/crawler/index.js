@@ -1,4 +1,4 @@
-const { checkUnique, getUnique } = require( "../../helpers/utils/functions/array" ),
+const { checkUnique } = require( "../../helpers/utils/functions/array" ),
   { searchPost } = require( "../../controllers/core/search.core" ),
   { agent, cookie } = require( "../../databases/cache/facebook" ),
   CronJob = require( "cron" ).CronJob,
@@ -7,7 +7,7 @@ const { checkUnique, getUnique } = require( "../../helpers/utils/functions/array
     io.sockets.on( "connection", function( socket ) {
 
       // Global variables
-      let date = new Date(), point = 0, listPost;
+      let date = new Date(), listPost;
 
       console.log( `Client IP: ${ socket.id}` );
 
