@@ -21,10 +21,6 @@ if ( process.env.APP_ENV === "production" ) {
   server = http.createServer( app );
 }
 
-io = require( "socket.io" )( server );
-
-require( "./src/microservices/crawler" )( io );
-
 app.set( "port", process.env.PORT_BASE );
 
 app.use( cors() );
@@ -40,5 +36,8 @@ app.use( "/", ( req, res ) => res.send( "API running!" ) );
 server.listen( process.env.PORT_BASE, () => {
   console.log( `Api server running on ${process.env.APP_URL}:${process.env.PORT_BASE}` );
 } );
+
+require( "./src/microservices/crawler" );
+
 
 module.exports = app;
