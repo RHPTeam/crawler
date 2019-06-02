@@ -57,7 +57,7 @@ const { checkUnique } = require( "../../helpers/utils/functions/array" ),
         }
 
         // Photos
-        if ( post.photos.length > 0 ) {
+        if ( post.photos && post.photos.length > 0 ) {
           post.photos = await Promise.all( post.photos.map( ( photo ) => {
             return {
               "link": photo,
@@ -77,12 +77,7 @@ const { checkUnique } = require( "../../helpers/utils/functions/array" ),
 
     // Remove post exist in database
     if ( infoCrawl.data.length > 0 ) {
-      listPost = listPost.filter( ( post ) => {
-        if ( checkUnique( infoCrawl.data, "feedId", post.feedId ) === true ) {
-          return false;
-        }
-        return true;
-      } );
+      listPost = listPost.filter( ( post ) => checkUnique( infoCrawl.data, "feedId", post.feedId ) === false );
     }
 
     return listPost;
