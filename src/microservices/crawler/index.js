@@ -1,3 +1,12 @@
+// eslint-disable-next-line no-extend-native
+Object.defineProperty( Array.prototype, "flat", {
+  "value": function( depth = 1 ) {
+    return this.reduce( function ( flat, toFlatten ) {
+      return flat.concat( ( Array.isArray( toFlatten ) && ( depth > 1 ) ) ? toFlatten.flat( depth - 1 ) : toFlatten );
+    }, [] );
+  }
+} );
+
 const { checkUnique } = require( "../../helpers/utils/functions/array" ),
   { searchPost } = require( "../../controllers/core/search.core" ),
   { agent, cookie } = require( "../../databases/cache/facebook" ),
@@ -13,7 +22,7 @@ const { checkUnique } = require( "../../helpers/utils/functions/array" ),
       // Search post by keyword
       listPostByKeyword = await searchPost( {
         "keyword": keyword,
-        "number": 50,
+        "number": 12,
         "cookie": cookie || null,
         "agent": agent
       } );
@@ -58,17 +67,16 @@ const { checkUnique } = require( "../../helpers/utils/functions/array" ),
 
         // Photos
         if ( post.photos && post.photos.length > 0 ) {
-          post.photos = await Promise.all( post.photos.map( ( photo ) => {
+          post.attachments = await Promise.all( post.photos.map( ( photo ) => {
             return {
               "link": photo,
               "typeAttachment": 1
             };
           } ) );
+          delete post.photos;
         }
-
         return post;
       } ) );
-
       return listPostByKeyword;
     } ) );
 
@@ -79,12 +87,14 @@ const { checkUnique } = require( "../../helpers/utils/functions/array" ),
     if ( infoCrawl.data.length > 0 ) {
       listPost = listPost.filter( ( post ) => checkUnique( infoCrawl.data, "feedId", post.feedId ) === false );
     }
+    listPost = listPost.filter( ( item ) => item.like > 50 );
 
-    return listPost;
+    return listPost ;
   };
 
 
 ( async () => {
+  // eslint-disable-next-line no-new
   new CronJob( "1 * * * * *", async function() {
     let dataResponseFromFacebook, dataResponseStatusFromMainServer;
 
