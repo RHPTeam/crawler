@@ -8,7 +8,7 @@ const express = require( "express" ),
   logger = require( "morgan" );
 const api = require( "./src/routes" );
 
-let server = null, io = null;
+let server = null;
 
 if ( process.env.APP_ENV === "production" ) {
   const options = {

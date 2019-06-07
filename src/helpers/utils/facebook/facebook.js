@@ -31,8 +31,6 @@ const {
     if ( feed.color === undefined ) {
       delete feed.color;
     }
-    console.log( "=======================" );
-    console.log( feed );
     const variables = {
       "client_mutation_id": "825c85ea-68e2-436e-9f7c-ed4b514fec3a",
       "actor_id": findSubString( cookie, "c_user=", ";" ),

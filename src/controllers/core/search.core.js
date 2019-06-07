@@ -1,6 +1,6 @@
 /* eslint-disable strict */
 // eslint-disable-next-line no-unused-vars
-const fs = require( "fs" ),
+const htmlDecode = require( "ent/decode" ),
   cheerio = require( "cheerio" ),
   request = require( "request" ),
   { post, postsSearch } = require( "../../configs/crawl" ),
@@ -19,6 +19,7 @@ const fs = require( "fs" ),
 
       request( option, ( err, res, body ) => {
         if ( !err && res.statusCode === 200 ) {
+
           let $ = cheerio.load( body ),
             pageCase = $( "div.permalinkPost" ).find( "div.userContentWrapper" ),
             photos = [];
@@ -38,10 +39,10 @@ const fs = require( "fs" ),
                 "text": null
               },
               "results": {
-                "markup": $( "div.permalinkPost" )
+                "content": htmlDecode( $( "div.permalinkPost" )
                   .find( "div.userContentWrapper" )
                   .find( "div.userContent" )
-                  .html(),
+                  .html().replace( /(<br \/>)|(<br>)/gm, "\n" ).replace( /(<\/p>)|(<\/div>)/gm, "\n" ).replace( /(<([^>]+)>)/gm, "" ) ),
                 "photos": photos.filter( ( photo ) => photo !== undefined )
               }
             } );
@@ -71,9 +72,9 @@ const fs = require( "fs" ),
               "text": null
             },
             "results": {
-              "markup": $( "div" )
+              "content": htmlDecode( $( "div" )
                 .find( "div.userContent" )
-                .html(),
+                .html().replace( /(<br \/>)|(<br>)/gm, "\n" ).replace( /(<\/p>)|(<\/div>)/gm, "\n" ).replace( /(<([^>]+)>)/gm, "" ) ),
               "photos": photos.filter( ( photo ) => photo !== undefined )
             }
           } );
@@ -161,7 +162,7 @@ const fs = require( "fs" ),
               "postID": result.postID,
               "like": result.like,
               "share": result.share,
-              "markup": postInfo.results.markup,
+              "content": postInfo.results.content,
               "photos": postInfo.results.photos
             };
           } ) );

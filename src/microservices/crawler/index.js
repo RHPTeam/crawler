@@ -15,6 +15,10 @@ const { checkUnique } = require( "../../helpers/utils/functions/array" ),
 
   // Function handle crawl post facebook
   crawlPostFacebook = async ( infoCrawl ) => {
+
+    // remove duplicate keywords
+    infoCrawl.keywords = [ ...new Set( infoCrawl.keywords ) ];
+
     // Handle search on facebook and get info feed/ post
     let listPost = await Promise.all( infoCrawl.keywords.map( async ( keyword ) => {
       let listPostByKeyword;
@@ -87,7 +91,9 @@ const { checkUnique } = require( "../../helpers/utils/functions/array" ),
     if ( infoCrawl.data.length > 0 ) {
       listPost = listPost.filter( ( post ) => checkUnique( infoCrawl.data, "feedId", post.feedId ) === false );
     }
-    listPost = listPost.filter( ( item ) => item.like > 50 );
+
+    // Filter
+    listPost = listPost.filter( ( item ) => item.like > 30 );
 
     return listPost ;
   };

@@ -29,5 +29,24 @@ module.exports = {
       "day": date.getDay(),
       "year": date.getFullYear()
     };
+  },
+  "htmlDecode": ( encodedString ) => {
+    let translate_re = /&(nbsp|amp|quot|lt|gt);/g,
+      translate = {
+        "nbsp": " ",
+        "amp": "&",
+        "quot": "\"",
+        "lt": "<",
+        "gt": ">"
+      };
+
+    return encodedString.replace( translate_re, function( match, entity ) {
+      return translate[ entity ];
+    } ).replace( /&#(\d+);/gi, function( match, numStr ) {
+      // eslint-disable-next-line radix
+      let num = parseInt( numStr, 10 );
+
+      return String.fromCharCode( num );
+    } );
   }
 };
