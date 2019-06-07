@@ -32,15 +32,14 @@ const { checkUnique } = require( "../../helpers/utils/functions/array" ),
       } );
 
       // Remove post no content
-      listPostByKeyword = listPostByKeyword.filter( ( post ) => post.postID.includes( "photos" ) === false ).filter( ( post ) => post.markup !== "" || post.markup !== null || post.markup !== undefined );
+      listPostByKeyword = listPostByKeyword.filter( ( post ) => post.postID.includes( "photos" ) === false ).filter( ( post ) => post.content !== "" || post.content !== null || post.content !== undefined );
 
       // Handle like, share and photos
       listPostByKeyword = await Promise.all( listPostByKeyword.map( async ( post ) => {
-        post.content = post.markup;
+        post.content = post.content;
         post.feedId = post.postID;
         post.generate = 1;
 
-        delete post.markup;
         delete post.postID;
 
         // Like
@@ -111,11 +110,11 @@ const { checkUnique } = require( "../../helpers/utils/functions/array" ),
       "url": `${process.env.APP_MAIN_URL}/api/v1/keywords/sync`
     } );
 
-    console.log( "Thread 01: Finnish request!" );
-
     console.log( "Thread 02: Starting request crawler to facebook!" );
     dataResponseFromFacebook = await crawlPostFacebook( listInfoRes.data );
     console.log( "Thread 02: Finnish request crawler to facebook!" );
+
+    console.log( dataResponseFromFacebook );
 
     console.log( "Thread 03: Starting request save data to main server!" );
     dataResponseStatusFromMainServer = await request( {
